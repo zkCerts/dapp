@@ -1,5 +1,5 @@
 export const submitPassport = async (address: string) => {
-  const submitUrl = 'https://api.scorer.gitcoin.co/registry/submit-passport';
+  const url = 'https://api.scorer.gitcoin.co/registry/submit-passport';
   const scoreId = process.env.NEXT_PUBLIC_GITCOIN_SCORER_ID;
   const body = JSON.stringify({
     address: address,
@@ -9,29 +9,24 @@ export const submitPassport = async (address: string) => {
     nonce: ""
   });
 
-  const response = await callGitcoinApi(submitUrl, 'POST', body);
-
+  const response = await callGitcoinApi(url, 'POST', body);
+  console.log(response)
   if (response.ok) {
     const data = await response.json();
-    const scoreUrl = `https://api.scorer.gitcoin.co/registry/score/${scoreId}/${address}`;
-    const scoreResponse = await callGitcoinApi(scoreUrl, 'GET');
-    if (scoreResponse.ok) {
-      const scoreData = await scoreResponse.json();
-      // Do something with the scoreData
-      console.log(scoreData)
-    } else {
-      throw new Error('API request failed with status ' + scoreResponse.status);
-    }
+
     return data;
   } else {
-    throw new Error('API request failed with status ' + response.status);
+    const scoreUrl = `https://api.scorer.gitcoin.co/registry/score/${scoreId}/${address}`;
+    const scoreResponse = await callGitcoinApi(scoreUrl, 'GET');
+    return scoreResponse.json();
+    
   }
 };
 
 const callGitcoinApi = async (url: string, method: string, body?: any) => {
   const response = await fetch(url, {
     method,
-    body: JSON.stringify(body),
+    body: body || undefined,
     headers: {
       'Content-Type': 'application/json',
       'X-API-Key': process.env.NEXT_PUBLIC_GITCOIN_PASSPORT_API_KEY || ''
