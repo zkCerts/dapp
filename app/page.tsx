@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useAccount } from "wagmi";
 import { submitPassport } from "@/services/gitcoinPassport";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const account = useAccount();
@@ -13,7 +14,7 @@ export default function Home() {
   };
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <button onClick={handleSubmit}>Submit</button>
+      <Button onClick={handleSubmit}>Submit Passport</Button>
     </main>
   );
 }
