@@ -9,12 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.29.2",
     "clsx": "^2.1.0",
+    "connectkit": "^1.7.3",
     "framer-motion": "^11.0.28",
     "next": "14.2.0",
     "react": "^18",
     "react-dom": "^18",
-    "tailwind-merge": "^2.2.2"
+    "tailwind-merge": "^2.2.2",
+    "viem": "^2.9.16",
+    "wagmi": "^2.5.19"
   },
   "devDependencies": {
     "@types/node": "^20",
