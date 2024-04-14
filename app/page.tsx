@@ -15,7 +15,7 @@ export default function Home() {
     const {attest} = useEAS();
     const account = useAccount();
     const {postMemberRequest, getMembership} = useAddMemberToPassportLteFive();
-    const [passport, setPassport] = useState<{ score: string }>();
+    const [passport, setPassport] = useState<{ score: string }>({score: '0'});
     const handleSubmit = async () => {
         if (account) {
             const res = await submitPassport(account?.address || '');
@@ -34,6 +34,14 @@ export default function Home() {
         fetchData();
     }, [account])
 
+    const attestData = {
+      memberIds: [generateMemberId(BigInt(GROUP_IDS.PASSPORT_LTE_FIVE), BigInt(Math.round(+passport.score)), account?.address)],
+      vote: true,
+      groupIds: [BigInt(GROUP_IDS.PASSPORT_LTE_FIVE)],
+      contractAddress: '0xa16DFb32Eb140a6f3F2AC68f41dAd8c7e83C4941',
+      chainId: 11155111n,
+      tokenId: 135772664401454446921886468365275516370944n,
+    }
 
     return (
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
@@ -56,15 +64,12 @@ export default function Home() {
           <TabsContent value="2. Validate Score" className="border-2 border-lightgray p-2">
                     <Button
                         onClick={() => postMemberRequest({
-                            memberId: generateMemberId(BigInt(GROUP_IDS.PASSPORT_LTE_FIVE), BigInt(passport?.score ?? " "), account?.address),
+                            memberId: attestData.memberIds[0],
                         })}>Add
                         Member</Button>
                 </TabsContent>
           <TabsContent value="3. Submit Attestation" className="border-2 border-lightgray p-2">
-            <p>Your address: {account?.address}</p>
-            <p>Your Group Id: {GROUP_IDS.PASSPORT_LTE_FIVE}</p>
-            <p>Your passport score {passport?.score ?? "N/A"}</p>
-            <AttestForm handleAttestSubmit={() => attest()} />
+            <AttestForm handleAttestSubmit={() => attest(attestData)} />
           </TabsContent>
         </Tabs>
       </main>
