@@ -8,6 +8,7 @@ import {useState} from "react";
 import {useAddMemberToPassportLteFive} from "@/hooks/useAddMemberToPassportLteFive";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useEffect } from "react";
+import { GROUP_IDS } from "@/utils/constants";
 
 export default function Home() {
     const {attest} = useEAS();
@@ -55,7 +56,7 @@ export default function Home() {
           </TabsContent>
           <TabsContent value="3. Submit Attestation" className="border-2 border-lightgray p-2">
             <p>Your address: {account?.address}</p>
-            <p>Your Group Id: {account?.address}</p>
+            <p>Your Group Id: {GROUP_IDS.PASSPORT_LTE_FIVE}</p>
             <p>Your passport score {passport?.score ?? "N/A"}</p>
           <Button onClick={() => attest('s', 's')}>Attest</Button>
           </TabsContent>
