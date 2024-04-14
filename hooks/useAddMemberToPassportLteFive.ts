@@ -14,5 +14,11 @@ export const useAddMemberToPassportLteFive = () => {
 
     }
 
-    return {postMemberRequest}
+    const getMembership = async ({memberId}: { memberId: string }) => {
+        const res = await axios.get('/api/bandada', {data: {memberId}})
+        console.log('member', res)
+        return res.data
+    }
+
+    return {postMemberRequest, getMembership}
 }

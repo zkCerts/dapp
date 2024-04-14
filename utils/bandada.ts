@@ -22,3 +22,7 @@ export const addMemberToPassportLteFive = async ({memberId}: { memberId: string 
         }
     )
 }
+
+export const getMembership = async ({groupId, memberId}: AddMemberToGroup) => {
+    return await apiSdk.isGroupMember({groupId: GROUP_IDS.PASSPORT_LTE_FIVE, memberId})
+}
