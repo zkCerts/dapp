@@ -54,6 +54,9 @@ export default function Home() {
           <Button onClick={() => postMemberRequest({memberId: account?.address as string})}>Add Member</Button>
           </TabsContent>
           <TabsContent value="3. Submit Attestation" className="border-2 border-lightgray p-2">
+            <p>Your address: {account?.address}</p>
+            <p>Your Group Id: {account?.address}</p>
+            <p>Your passport score {passport?.score ?? "N/A"}</p>
           <Button onClick={() => attest('s', 's')}>Attest</Button>
           </TabsContent>
         </Tabs>
