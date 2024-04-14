@@ -7,7 +7,6 @@ import {useEAS} from "@/hooks/useEAS";
 import {useEffect, useState} from "react";
 import {useAddMemberToPassportLteFive} from "@/hooks/useAddMemberToPassportLteFive";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { useEffect } from "react";
 import AttestForm from "@/components/AttestForm";
 import { GROUP_IDS } from "@/utils/constants";
 import {generateMemberId} from "@/utils/generateMemberId";
