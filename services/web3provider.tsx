@@ -1,14 +1,14 @@
 "use client"
 
 import { WagmiProvider, createConfig, http } from "wagmi";
-import { mainnet, optimism } from "wagmi/chains";
+import { mainnet, optimism, sepolia } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ConnectKitProvider, getDefaultConfig } from "connectkit";
 
 const config = createConfig(
   getDefaultConfig({
     // Your dApps chains
-    chains: [optimism],
+    chains: [sepolia],
 
     // Required API Keys
     walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || '',

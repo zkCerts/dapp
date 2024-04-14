@@ -5,10 +5,11 @@ import { useEffect, useState } from 'react';
 
 import { useEthersProvider } from './useEthersSigner';
 
-// EAS Schema https://optimism.easscan.org/schema/view/0x8a96480233ab2a15f56db4cdf03877956aaaefc4df9abf1d1707730f82c9a38c
+// EAS Schema https://sepolia.easscan.org/schema/view/0x384874900008756077fcdbc7ef7fe91d3e27b0e51d0671c977645440305bcd56
 
-const easContractAddress = "0x4200000000000000000000000000000000000021";
-const schemaUID = "0x8a96480233ab2a15f56db4cdf03877956aaaefc4df9abf1d1707730f82c9a38c";
+const easContractAddress = "0xC2679fBD37d54388Ce493F1DB75320D236e1815e";
+const schemaUID = "0x384874900008756077fcdbc7ef7fe91d3e27b0e51d0671c977645440305bcd56";
+
 const eas = new EAS(easContractAddress);
 
 export const useEAS = () => {
@@ -29,24 +30,25 @@ export const useEAS = () => {
 
   const attest = async (message: string, context: string) => {
     // Initialize SchemaEncoder with the schema string
-      const schemaEncoder = new SchemaEncoder("bool vote,address contract,string tokenID,string proof");
-      const encodedData = schemaEncoder.encodeData([
-        { name: "vote", value: false, type: "bool" },
-        { name: "contract", value: "0x0000000000000000000000000000000000000000", type: "address" },
-        { name: "tokenID", value: "", type: "string" },
-        { name: "proof", value: "", type: "string" }
-      ]);
-      const tx = await eas.attest({
-        schema: schemaUID,
-        data: {
-          recipient: "0x0000000000000000000000000000000000000000",
-          expirationTime: '0' as unknown as bigint,
-          revocable: true, // Be aware that if your schema is not revocable, this MUST be false
-          data: encodedData,
-        },
-      });
-      const newAttestationUID = await tx.wait();
-      console.log("New attestation UID:", newAttestationUID);
+    const schemaEncoder = new SchemaEncoder("string[] memberIds,bool vote,uint256[] groupIds,address contractAddress,uint256 tokenId,uint256 chainId");
+    const encodedData = schemaEncoder.encodeData([
+      { name: "memberIds", value: [], type: "string[]" },
+      { name: "vote", value: false, type: "bool" },
+      { name: "groupIds", value: [], type: "uint256[]" },
+      { name: "contractAddress", value: "0x0000000000000000000000000000000000000000", type: "address" },
+      { name: "tokenId", value: "0", type: "uint256" },
+      { name: "chainId", value: "0", type: "uint256" },
+    ]);
+    const tx = await eas.attest({
+      schema: schemaUID,
+      data: {
+        recipient: "0x0000000000000000000000000000000000000000",
+        expirationTime: 0 as unknown as bigint,
+        revocable: true, // Be aware that if your schema is not revocable, this MUST be false
+        data: encodedData,
+      },
+    });
+      console.log("New attestation UID:", tx);
   };
 
   return { connectedEAS, attest };
