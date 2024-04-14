@@ -28,7 +28,7 @@ export const useEAS = () => {
     connectEAS();
   }, [provider]);
 
-  const attest = async (message: string, context: string) => {
+  const attest = async () => {
     // Initialize SchemaEncoder with the schema string
     const schemaEncoder = new SchemaEncoder("string[] memberIds,bool vote,uint256[] groupIds,address contractAddress,uint256 tokenId,uint256 chainId");
     const encodedData = schemaEncoder.encodeData([
