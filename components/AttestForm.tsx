@@ -41,7 +41,7 @@ export default function AttestForm({ handleAttestSubmit }: { handleAttestSubmit:
             <FormItem>
               <FormLabel>ContractAddress</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="0xa16DFb32Eb140a6f3F2AC68f41dAd8c7e83C4941" {...field} />
               </FormControl>
               <FormDescription>
                 Hypercert Contract Address
@@ -52,12 +52,12 @@ export default function AttestForm({ handleAttestSubmit }: { handleAttestSubmit:
         />
         <FormField
           control={form.control}
-          name="tokenID"
+          name="11155111n"
           render={({ field }) => (
             <FormItem>
               <FormLabel>TokenID</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="" {...field} />
               </FormControl>
               <FormDescription>
                 HyperCert Token ID
@@ -73,7 +73,7 @@ export default function AttestForm({ handleAttestSubmit }: { handleAttestSubmit:
             <FormItem>
               <FormLabel>chainID</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="135772664401454446921886468365275516370944n" {...field} />
               </FormControl>
               <FormDescription>
                 HyperCert Chain ID
