@@ -8,6 +8,7 @@ import {useState} from "react";
 import {useAddMemberToPassportLteFive} from "@/hooks/useAddMemberToPassportLteFive";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useEffect } from "react";
+import AttestForm from "@/components/AttestForm";
 import { GROUP_IDS } from "@/utils/constants";
 
 export default function Home() {
@@ -58,7 +59,7 @@ export default function Home() {
             <p>Your address: {account?.address}</p>
             <p>Your Group Id: {GROUP_IDS.PASSPORT_LTE_FIVE}</p>
             <p>Your passport score {passport?.score ?? "N/A"}</p>
-          <Button onClick={() => attest('s', 's')}>Attest</Button>
+            <AttestForm handleAttestSubmit={() => attest()} />
           </TabsContent>
         </Tabs>
       </main>
