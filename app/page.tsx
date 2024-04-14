@@ -4,12 +4,13 @@ import {useAccount} from "wagmi";
 import {submitPassport} from "@/services/gitcoinPassport";
 import {Button} from "@/components/ui/button";
 import {useEAS} from "@/hooks/useEAS";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useAddMemberToPassportLteFive} from "@/hooks/useAddMemberToPassportLteFive";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useEffect } from "react";
 import AttestForm from "@/components/AttestForm";
 import { GROUP_IDS } from "@/utils/constants";
+import {generateMemberId} from "@/utils/generateMemberId";
 
 export default function Home() {
     const {attest} = useEAS();
@@ -18,19 +19,20 @@ export default function Home() {
     const [passport, setPassport] = useState<{ score: string }>();
     const handleSubmit = async () => {
         if (account) {
-          const res = await submitPassport(account?.address || '');
-          setPassport(res);
+            const res = await submitPassport(account?.address || '');
+            setPassport(res);
         }
     };
 
     useEffect(() => {
-      async function fetchData() {
-        if (account) {
-          const res = await getMembership({memberId: account?.address || ''});
-          console.log(res);
+        async function fetchData() {
+            if (account) {
+                const res = await getMembership({memberId: account?.address || ''});
+                console.log(res);
+            }
         }
-      }
-      fetchData();
+
+        fetchData();
     }, [account])
 
 
@@ -53,8 +55,12 @@ export default function Home() {
           <Button onClick={handleSubmit}>Submit Passport</Button>
           </TabsContent>
           <TabsContent value="2. Validate Score" className="border-2 border-lightgray p-2">
-          <Button onClick={() => postMemberRequest({memberId: account?.address as string})}>Add Member</Button>
-          </TabsContent>
+                    <Button
+                        onClick={() => postMemberRequest({
+                            memberId: generateMemberId(BigInt(GROUP_IDS.PASSPORT_LTE_FIVE), BigInt(passport?.score ?? " "), account?.address),
+                        })}>Add
+                        Member</Button>
+                </TabsContent>
           <TabsContent value="3. Submit Attestation" className="border-2 border-lightgray p-2">
             <p>Your address: {account?.address}</p>
             <p>Your Group Id: {GROUP_IDS.PASSPORT_LTE_FIVE}</p>
